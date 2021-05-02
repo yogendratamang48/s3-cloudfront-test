@@ -14,8 +14,8 @@ jq "$JQ_QUERY" < dist.json > updated.json
 
 CFDIST_ETAG=$(jq -r '.ETag' < dist.json)
 jq .DistributionConfig < updated.json > new-dist-config.json
-cat new-dist-config.json
 echo $CFDIST_ETAG
 
 aws cloudfront update-distribution --id ${CF_DEV_ID} --distribution-config file://new-dist-config.json --if-match ${CFDIST_ETAG}
-
+rm -rf *.json
+echo "All Done"
